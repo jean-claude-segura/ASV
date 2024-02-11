@@ -6244,6 +6244,7 @@ namespace ARKViewer
                     {
                         //check realm
                         string selectedRealm = (cboPlayerRealm.SelectedItem as ASVComboValue).Key;
+                        cm.Realm = selectedRealm;
                         //if (!string.IsNullOrEmpty(selectedRealm))
                         if (!string.IsNullOrEmpty(selectedRealm) && selectedRealm != "Main Realm")
                         {
@@ -6549,6 +6550,7 @@ namespace ARKViewer
                 }
 
                 string selectedRealm = (cboTameRealm.SelectedItem as ASVComboValue).Key;
+                cm.Realm = selectedRealm;
 
 
                 //change into a strongly typed list for use in parallel
