@@ -6579,19 +6579,33 @@ namespace ARKViewer
                         //check realm
 
                         //if (!string.IsNullOrEmpty(selectedRealm))
-                        if (!string.IsNullOrEmpty(selectedRealm) && selectedRealm != "Main Realm")
+                        if (!string.IsNullOrEmpty(selectedRealm))
                         {
                             if (cm.LoadedMap.Regions != null && cm.LoadedMap.Regions.Count > 0)
                             {
-                                var selectedRegion = cm.LoadedMap.Regions.FirstOrDefault(r => r.RegionName == selectedRealm);
-                                addItem = detail.Z >= selectedRegion.ZStart
-                                            && detail.Z <= selectedRegion.ZEnd
-                                            && detail.Latitude >= selectedRegion.LatitudeStart
-                                            && detail.Latitude <= selectedRegion.LatitudeEnd
-                                            && detail.Longitude >= selectedRegion.LongitudeStart
-                                            && detail.Longitude <= selectedRegion.LongitudeEnd;
+                                if (selectedRealm == "Main Realm")
+                                {
+                                    foreach (var selectedRegion in cm.LoadedMap.Regions)
+                                    {
+                                        addItem = !(detail.Z >= selectedRegion.ZStart
+                                                    && detail.Z <= selectedRegion.ZEnd
+                                                    && detail.Latitude >= selectedRegion.LatitudeStart
+                                                    && detail.Latitude <= selectedRegion.LatitudeEnd
+                                                    && detail.Longitude >= selectedRegion.LongitudeStart
+                                                    && detail.Longitude <= selectedRegion.LongitudeEnd);
+                                    }
+                                }
+                                else
+                                {
+                                    var selectedRegion = cm.LoadedMap.Regions.FirstOrDefault(r => r.RegionName == selectedRealm);
+                                    addItem = detail.Z >= selectedRegion.ZStart
+                                                && detail.Z <= selectedRegion.ZEnd
+                                                && detail.Latitude >= selectedRegion.LatitudeStart
+                                                && detail.Latitude <= selectedRegion.LatitudeEnd
+                                                && detail.Longitude >= selectedRegion.LongitudeStart
+                                                && detail.Longitude <= selectedRegion.LongitudeEnd;
 
-
+                                }
                             }
 
                         }
