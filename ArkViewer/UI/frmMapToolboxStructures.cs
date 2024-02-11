@@ -150,9 +150,9 @@ namespace ARKViewer
             selectedMarker.Colour = "White";
             selectedMarker.Lat = (double)selectedStructure.Latitude.GetValueOrDefault(0);
             selectedMarker.Lon = (double)selectedStructure.Latitude.GetValueOrDefault(0);
-            selectedMarker.X = selectedStructure.X;
-            selectedMarker.Y = selectedStructure.Y;
-            selectedMarker.Z = selectedStructure.Z;
+            selectedMarker.X = selectedStructure.X ?? 0;
+            selectedMarker.Y = selectedStructure.Y ?? 0;
+            selectedMarker.Z = selectedStructure.Z ?? 0;
 
 
             var commandText = cboConsoleCommands.SelectedItem.ToString();

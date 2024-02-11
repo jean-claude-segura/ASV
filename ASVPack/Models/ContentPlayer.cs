@@ -20,18 +20,18 @@ using System.Threading.Tasks;
 namespace ASVPack.Models
 {
     [DataContract]
-    public class ContentPlayer
+    public class ContentPlayer : ContentCoord
     {
         [DataMember] public long Id { get; set; } = 0;
         [DataMember] public string CharacterName { get; set; } = "";
         [DataMember] public string Name { get; set; } = "";
         [DataMember] public string Gender { get; set; } = "Male";
         [DataMember] public string NetworkId { get; set; } = "";
-        [DataMember] public float? Latitude { get; set; } = null;
+        /*[DataMember] public float? Latitude { get; set; } = null;
         [DataMember] public float? Longitude { get; set; } = null;
         [DataMember] public float? X { get; set; } = null;
         [DataMember] public float? Y { get; set; } = null;
-        [DataMember] public float? Z { get; set; } = null;
+        [DataMember] public float? Z { get; set; } = null;*/
         [DataMember] public ContentInventory Inventory { get; set; } = new ContentInventory();
         [DataMember] public ContentInventory Engrams { get; set; } = new ContentInventory();
         [DataMember] public ContentInventory Emotes { get; set; } = new ContentInventory();
