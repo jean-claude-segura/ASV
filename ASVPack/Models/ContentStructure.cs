@@ -15,18 +15,18 @@ using System.Threading.Tasks;
 namespace ASVPack.Models
 {
     [DataContract]
-    public class ContentStructure
+    public class ContentStructure : ContentCoord
     {
         [DataMember] public string ClassName { get; set; } = "";
-        [DataMember] public float? Latitude { get; set; } = 0;
-        [DataMember] public float? Longitude { get; set; } = 0;
+        /*[DataMember] public float? Latitude { get; set; } = 0;
+        [DataMember] public float? Longitude { get; set; } = 0;*/
         [DataMember] public string DisplayName { get; set; } = "";
         [DataMember] public bool? IsLocked { get; set; } = null;
         [DataMember] public bool? IsSwitchedOn { get; set; } = null;
 
-        [DataMember] public float X { get; set; } = 0;
+        /*[DataMember] public float X { get; set; } = 0;
         [DataMember] public float Y { get; set; } = 0;
-        [DataMember] public float Z { get; set; } = 0;
+        [DataMember] public float Z { get; set; } = 0;*/
         [DataMember] public ContentInventory Inventory { get; set; } = new ContentInventory();
         [DataMember] public long TargetingTeam { get; set; } = 0;
 

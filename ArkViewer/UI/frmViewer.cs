@@ -539,6 +539,7 @@ namespace ARKViewer
 
             if (cm.LoadedMap != null && cm.LoadedMap.Regions != null && cm.LoadedMap.Regions.Count > 0)
             {
+                cboWildRealm.Items.Add(new ASVComboValue("Main Realm", "Main Realm"));
                 foreach (var realmRegion in cm.LoadedMap.Regions)
                 {
                     cboWildRealm.Items.Add(new ASVComboValue(realmRegion.RegionName, realmRegion.RegionName));
@@ -551,6 +552,7 @@ namespace ARKViewer
             cboTameRealm.Items.Add(new ASVComboValue("", "All Realms"));
             if (cm.LoadedMap != null && cm.LoadedMap.Regions != null && cm.LoadedMap.Regions.Count > 0)
             {
+                cboTameRealm.Items.Add(new ASVComboValue("Main Realm", "Main Realm"));
                 foreach (var realmRegion in cm.LoadedMap.Regions)
                 {
                     cboTameRealm.Items.Add(new ASVComboValue(realmRegion.RegionName, realmRegion.RegionName));
@@ -563,6 +565,7 @@ namespace ARKViewer
             cboStructureRealm.Items.Add(new ASVComboValue("", "All Realms"));
             if (cm.LoadedMap != null && cm.LoadedMap.Regions != null && cm.LoadedMap.Regions.Count > 0)
             {
+                cboStructureRealm.Items.Add(new ASVComboValue("Main Realm", "Main Realm"));
                 foreach (var realmRegion in cm.LoadedMap.Regions)
                 {
                     cboStructureRealm.Items.Add(new ASVComboValue(realmRegion.RegionName, realmRegion.RegionName));
@@ -575,6 +578,7 @@ namespace ARKViewer
             cboPlayerRealm.Items.Add(new ASVComboValue("", "All Realms"));
             if (cm.LoadedMap != null && cm.LoadedMap.Regions != null && cm.LoadedMap.Regions.Count > 0)
             {
+                cboPlayerRealm.Items.Add(new ASVComboValue("Main Realm", "Main Realm"));
                 foreach (var realmRegion in cm.LoadedMap.Regions)
                 {
                     cboPlayerRealm.Items.Add(new ASVComboValue(realmRegion.RegionName, realmRegion.RegionName));
@@ -588,6 +592,7 @@ namespace ARKViewer
             cboDroppedItemRealm.Items.Add(new ASVComboValue("", "All Realms"));
             if (cm.LoadedMap != null && cm.LoadedMap.Regions != null && cm.LoadedMap.Regions.Count > 0)
             {
+                cboDroppedItemRealm.Items.Add(new ASVComboValue("Main Realm", "Main Realm"));
                 foreach (var realmRegion in cm.LoadedMap.Regions)
                 {
                     cboDroppedItemRealm.Items.Add(new ASVComboValue(realmRegion.RegionName, realmRegion.RegionName));
@@ -5834,7 +5839,8 @@ namespace ARKViewer
                         {
                             //check realm
 
-                            if (!string.IsNullOrEmpty(selectedRealm))
+                            //if (!string.IsNullOrEmpty(selectedRealm))
+                            if (!string.IsNullOrEmpty(selectedRealm) && selectedRealm != "Main Realm")
                             {
                                 if (cm.LoadedMap.Regions != null && cm.LoadedMap.Regions.Count > 0)
                                 {
@@ -6281,7 +6287,8 @@ namespace ARKViewer
                     {
                         //check realm
                         string selectedRealm = (cboPlayerRealm.SelectedItem as ASVComboValue).Key;
-                        if (!string.IsNullOrEmpty(selectedRealm))
+                        //if (!string.IsNullOrEmpty(selectedRealm))
+                        if (!string.IsNullOrEmpty(selectedRealm) && selectedRealm != "Main Realm")
                         {
                             if (cm.LoadedMap.Regions != null && cm.LoadedMap.Regions.Count > 0)
                             {
@@ -6614,19 +6621,34 @@ namespace ARKViewer
                     {
                         //check realm
 
+                        //if (!string.IsNullOrEmpty(selectedRealm))
                         if (!string.IsNullOrEmpty(selectedRealm))
                         {
                             if (cm.LoadedMap.Regions != null && cm.LoadedMap.Regions.Count > 0)
                             {
-                                var selectedRegion = cm.LoadedMap.Regions.FirstOrDefault(r => r.RegionName == selectedRealm);
-                                addItem = detail.Z >= selectedRegion.ZStart
-                                            && detail.Z <= selectedRegion.ZEnd
-                                            && detail.Latitude >= selectedRegion.LatitudeStart
-                                            && detail.Latitude <= selectedRegion.LatitudeEnd
-                                            && detail.Longitude >= selectedRegion.LongitudeStart
-                                            && detail.Longitude <= selectedRegion.LongitudeEnd;
+                                if (selectedRealm == "Main Realm")
+                                {
+                                    foreach (var selectedRegion in cm.LoadedMap.Regions)
+                                    {
+                                        addItem = !(detail.Z >= selectedRegion.ZStart
+                                                    && detail.Z <= selectedRegion.ZEnd
+                                                    && detail.Latitude >= selectedRegion.LatitudeStart
+                                                    && detail.Latitude <= selectedRegion.LatitudeEnd
+                                                    && detail.Longitude >= selectedRegion.LongitudeStart
+                                                    && detail.Longitude <= selectedRegion.LongitudeEnd);
+                                    }
+                                }
+                                else
+                                {
+                                    var selectedRegion = cm.LoadedMap.Regions.FirstOrDefault(r => r.RegionName == selectedRealm);
+                                    addItem = detail.Z >= selectedRegion.ZStart
+                                                && detail.Z <= selectedRegion.ZEnd
+                                                && detail.Latitude >= selectedRegion.LatitudeStart
+                                                && detail.Latitude <= selectedRegion.LatitudeEnd
+                                                && detail.Longitude >= selectedRegion.LongitudeStart
+                                                && detail.Longitude <= selectedRegion.LongitudeEnd;
 
-
+                                }
                             }
 
                         }

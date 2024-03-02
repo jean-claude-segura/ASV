@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace ASVPack.Models
 {
     [DataContract]
-    public abstract class ContentCreature
+    public abstract class ContentCreature : ContentCoord
     {
         [DataMember] public int BaseLevel { get; set; } = 0;
         [DataMember] public byte[] BaseStats { get; set; }
@@ -26,12 +26,12 @@ namespace ASVPack.Models
         [DataMember] public string DinoId { get; set; } = "";
         [DataMember] public bool IsBaby { get; set; } = false;
         [DataMember] public bool IsNeutered { get; set; } = false;
-        [DataMember] public float? Latitude { get; set; }
-        [DataMember] public float? Longitude { get; set; }
+        /*[DataMember] public float? Latitude { get; set; }
+        [DataMember] public float? Longitude { get; set; }*/
         [DataMember] public string[] ProductionResources { get; set; }
-        [DataMember] public float? X { get; set; }
+        /*[DataMember] public float? X { get; set; }
         [DataMember] public float? Y { get; set; }
-        [DataMember] public float? Z { get; set; }
+        [DataMember] public float? Z { get; set; }*/
         [DataMember] public float WildScale { get; set; } = 1;
         [DataMember] public string Rig1 { get; set; } = "";
         [DataMember] public string Rig2 { get; set; } = "";

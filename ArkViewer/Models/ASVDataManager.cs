@@ -166,6 +166,41 @@ namespace ARKViewer.Models
         }
 
 
+        public List<T> PruneContentCoord<T>(List<T> contentCreatures, string selectedRealm) where T : ContentCoord
+        {
+            if (selectedRealm == "Main Realm")
+            {
+                foreach (var selectedRegion in LoadedMap.Regions)
+                {
+                    var contentCreaturesTemp = contentCreatures.ToList();
+                    contentCreaturesTemp.RemoveAll(_ => !(
+                            _.Z >= selectedRegion.ZStart
+                            && _.Z <= selectedRegion.ZEnd
+                            && _.Latitude >= selectedRegion.LatitudeStart
+                            && _.Latitude <= selectedRegion.LatitudeEnd
+                            && _.Longitude >= selectedRegion.LongitudeStart
+                            && _.Longitude <= selectedRegion.LongitudeEnd
+                            )
+                    );
+                    contentCreatures.RemoveAll(_ => contentCreaturesTemp.Contains(_));
+                }
+            }
+            else
+            {
+                var selectedRegion = LoadedMap.Regions.FirstOrDefault(r => r.RegionName == selectedRealm);
+                contentCreatures.RemoveAll(_ => !(
+                        _.Z >= selectedRegion.ZStart
+                        && _.Z <= selectedRegion.ZEnd
+                        && _.Latitude >= selectedRegion.LatitudeStart
+                        && _.Latitude <= selectedRegion.LatitudeEnd
+                        && _.Longitude >= selectedRegion.LongitudeStart
+                        && _.Longitude <= selectedRegion.LongitudeEnd
+                        )
+                );
+            }
+            return contentCreatures;
+        }
+
         //Query options
         public List<ContentWildCreature> GetWildCreatures(int minLevel, int maxLevel, float fromLat, float fromLon, float fromRadius, string selectedClass, string selectedRealm)
         {
@@ -188,17 +223,7 @@ namespace ARKViewer.Models
             {
                 if(LoadedMap.Regions!=null && LoadedMap.Regions.Count > 0)
                 {
-                    var selectedRegion = LoadedMap.Regions.FirstOrDefault(r=>r.RegionName == selectedRealm);
-                    wilds.RemoveAll(wild => !(                    
-                            wild.Z >= selectedRegion.ZStart
-                            && wild.Z <= selectedRegion.ZEnd
-                            && wild.Latitude >= selectedRegion.LatitudeStart
-                            && wild.Latitude <= selectedRegion.LatitudeEnd
-                            && wild.Longitude >= selectedRegion.LongitudeStart
-                            && wild.Longitude <= selectedRegion.LongitudeEnd
-                            )
-                    );
-
+                    wilds = PruneContentCoord(wilds, selectedRealm);
                 }
 
             }
@@ -228,17 +253,7 @@ namespace ARKViewer.Models
             {
                 if (LoadedMap.Regions != null && LoadedMap.Regions.Count > 0)
                 {
-                    var selectedRegion = LoadedMap.Regions.FirstOrDefault(r => r.RegionName == selectedRealm);
-                    tamed.RemoveAll(tame => !(
-                            tame.Z >= selectedRegion.ZStart
-                            && tame.Z <= selectedRegion.ZEnd
-                            && tame.Latitude >= selectedRegion.LatitudeStart
-                            && tame.Latitude <= selectedRegion.LatitudeEnd
-                            && tame.Longitude >= selectedRegion.LongitudeStart
-                            && tame.Longitude <= selectedRegion.LongitudeEnd
-                            )
-                    );
-
+                    tamed = PruneContentCoord(tamed, selectedRealm);
                 }
 
             }
@@ -370,17 +385,7 @@ namespace ARKViewer.Models
             {
                 if (LoadedMap.Regions != null && LoadedMap.Regions.Count > 0)
                 {
-                    var selectedRegion = LoadedMap.Regions.FirstOrDefault(r => r.RegionName == selectedRealm);
-                    tribeStructures.RemoveAll(playerStructure => !(
-                            playerStructure.Z >= selectedRegion.ZStart
-                            && playerStructure.Z <= selectedRegion.ZEnd
-                            && playerStructure.Latitude >= selectedRegion.LatitudeStart
-                            && playerStructure.Latitude <= selectedRegion.LatitudeEnd
-                            && playerStructure.Longitude >= selectedRegion.LongitudeStart
-                            && playerStructure.Longitude <= selectedRegion.LongitudeEnd
-                            )
-                    );
-
+                    tribeStructures = PruneContentCoord(tribeStructures, selectedRealm);
                 }
 
             }
@@ -420,17 +425,7 @@ namespace ARKViewer.Models
             {
                 if (LoadedMap.Regions != null && LoadedMap.Regions.Count > 0)
                 {
-                    var selectedRegion = LoadedMap.Regions.FirstOrDefault(r => r.RegionName == selectedRealm);
-                    tribePlayers.RemoveAll(player => !(
-                            player.Z >= selectedRegion.ZStart
-                            && player.Z <= selectedRegion.ZEnd
-                            && player.Latitude >= selectedRegion.LatitudeStart
-                            && player.Latitude <= selectedRegion.LatitudeEnd
-                            && player.Longitude >= selectedRegion.LongitudeStart
-                            && player.Longitude <= selectedRegion.LongitudeEnd
-                            )
-                    );
-
+                    tribePlayers = PruneContentCoord(tribePlayers, selectedRealm);
                 }
 
             }
@@ -471,17 +466,7 @@ namespace ARKViewer.Models
             {
                 if (LoadedMap.Regions != null && LoadedMap.Regions.Count > 0)
                 {
-                    var selectedRegion = LoadedMap.Regions.FirstOrDefault(r => r.RegionName == selectedRealm);
-                    foundItems.RemoveAll(foundItem => !(
-                            foundItem.Z >= selectedRegion.ZStart
-                            && foundItem.Z <= selectedRegion.ZEnd
-                            && foundItem.Latitude >= selectedRegion.LatitudeStart
-                            && foundItem.Latitude <= selectedRegion.LatitudeEnd
-                            && foundItem.Longitude >= selectedRegion.LongitudeStart
-                            && foundItem.Longitude <= selectedRegion.LongitudeEnd
-                            )
-                    );
-
+                    foundItems = PruneContentCoord(foundItems, selectedRealm);
                 }
 
             }
@@ -556,9 +541,9 @@ namespace ARKViewer.Models
                                             PlayerName = tribe.Players.FirstOrDefault(p=>p.Id == g.OwnerPlayerId)?.Name,
                                             Latitude = container.Latitude.GetValueOrDefault(0),
                                             Longitude = container.Longitude.GetValueOrDefault(0),
-                                            X = container.X,
-                                            Y = container.Y,
-                                            Z = container.Z,
+                                            X = container.X ?? 0,
+                                            Y = container.Y ?? 0,
+                                            Z = container.Z ?? 0,
                                             Quantity = g.Qty,
                                             IsBlueprint = g.IsBlueprint,
                                             Rating = g.Rating,

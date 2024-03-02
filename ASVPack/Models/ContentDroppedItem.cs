@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace ASVPack.Models
 {
     [DataContract]
-    public class ContentDroppedItem
+    public class ContentDroppedItem : ContentCoord
     {
         [DataMember] public string ClassName { get; set; }
         [DataMember] public bool IsBlueprint { get; set; }
@@ -21,11 +21,11 @@ namespace ASVPack.Models
         [DataMember] public string DroppedByName { get; set; }
         [DataMember] public long DroppedByPlayerId { get; set; }
         [DataMember] public int DroppedByTribeId { get; set; }
-        [DataMember] public float? Latitude { get; set; }
+        /*[DataMember] public float? Latitude { get; set; }
         [DataMember] public float? Longitude { get; set; }
         [DataMember] public float? X { get; set; }
         [DataMember] public float? Y { get; set; }
-        [DataMember] public float? Z { get; set; }
+        [DataMember] public float? Z { get; set; }*/
         [DataMember] public ContentInventory Inventory { get; set; } = new ContentInventory();
         [DataMember] public double CreatedTimeInGame { get; set; } = 0;
         [DataMember] public DateTime? CreatedDateTime { get; set; } = null;
